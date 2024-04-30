@@ -6,3 +6,17 @@ out/
 !/broadcast
 /broadcast/*
 /broadcast/*/31337/
+
+# JS
+node_modules/
+
+#Hardhat files
+cache_hardhat/
+artifacts/
+deployments/localhost
+
+#Hardhat plugin files
+typechain-types/
+
+pp.json
+id
