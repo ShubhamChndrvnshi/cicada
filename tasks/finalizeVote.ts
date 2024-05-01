@@ -50,6 +50,7 @@ task("finalize-vote", "New cicada vote instance")
             // console.log({ s1: zz1.solve() })
 
             // const tally = assumedFinalTally
+            console.log(`Starting brute force`)
             const { w, tally } = bruteForceDiscreteLog(u, v, y, N, T)
 
             console.log(`Final decrypted tally: ${tally.toString()}`)
