@@ -9,13 +9,12 @@ import '@nomicfoundation/hardhat-ethers';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
 
-import "./tasks/expireVotes";
-import "./tasks/generatePP";
+import "./tasks/1_generatePP";
+import "./tasks/2_createCicadaVote";
+import "./tasks/3_castBallot";
+import "./tasks/4_expireVotes";
+import "./tasks/5_finalizeVote";
 import "./tasks/getPublicParams";
-import "./tasks/createCicadaVote";
-import "./tasks/castBallot";
-import "./tasks/castBallotBulk";
-import "./tasks/finalizeVote";
 
 const config: HardhatUserConfig = {
   solidity: {

@@ -35,6 +35,17 @@ export function normalize(x: bigint, N: bigint): bigint {
     return x
 }
 
+export function generateRandomBigInt(min: bigint, max: bigint) {
+    const range = max - min;
+    const byteSize = Math.ceil(Math.log2(Number(range)) / 8);
+    let rndBigInt: bigint;
+    do {
+        const rndBytes = crypto.randomBytes(byteSize);
+        rndBigInt = BigInt('0x' + rndBytes.toString('hex'));
+    } while (rndBigInt > range);
+    return min + rndBigInt;
+}
+
 // implementation derived from https://en.wikipedia.org/wiki/Jacobi_symbol
 export function jacobi(a: bigint, n: bigint): number {
     assert(n > 0n && n % 2n === 1n, "Assertion failed", 'UNEXPECTED_ARGUMENT')
@@ -69,15 +80,6 @@ export function jacobi(a: bigint, n: bigint): number {
     }
 }
 
-export function gcd(a: bigint, b: bigint): bigint {
-    while (b !== BigInt(0)) {
-        let t = b;
-        b = a % b;
-        a = t;
-    }
-    return a;
-}
-
 export function csvToJson(filePath: string): any {
     // Read the CSV file content
     const csvData = readFileSync(filePath, { encoding: 'utf-8' });
@@ -93,36 +95,6 @@ export function csvToJson(filePath: string): any {
         });
     });
 
-}
-
-export function ConvertToCSV(objArray: Object[]) {
-    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-    const header = Object.keys(objArray[0])
-    var str = header + '\r\n';
-
-    for (var i = 0; i < array.length; i++) {
-        var line = '';
-        for (var index in array[i]) {
-            if (line != '') line += ','
-
-            line += array[i][index];
-        }
-
-        str += line + '\r\n';
-    }
-
-    return str;
-}
-
-export function generateRandomBigInt(min: bigint, max: bigint) {
-    const range = max - min;
-    const byteSize = Math.ceil(Math.log2(Number(range)) / 8);
-    let rndBigInt: bigint;
-    do {
-        const rndBytes = crypto.randomBytes(byteSize);
-        rndBigInt = BigInt('0x' + rndBytes.toString('hex'));
-    } while (rndBigInt > range);
-    return min + rndBigInt;
 }
 
 export function recentlyCreatedId() {

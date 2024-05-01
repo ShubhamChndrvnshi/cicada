@@ -23,7 +23,7 @@ task("cast-ballot", "Cast a private ballot")
             try {
                 const vote = args.vote == "YES" ? true : false;
 
-                const pp = await hre.run("get-cicada-pp", {
+                const pp = await hre.run("get-cicada-public-param", {
                     id: args.id
                 }) as CicadaVote.PublicParametersStruct
 

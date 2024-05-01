@@ -1,5 +1,5 @@
 import { CicadaVote } from '../typechain-types/CicadaVote';
-import { normalize, generateRandomBigInt, fromUint1024, toUint1024 } from "./"
+import { normalize, generateRandomBigInt, fromUint1024, toUint1024 } from "."
 import { ethers } from 'ethers';
 import { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers';
 import { modPow} from "bigint-crypto-utils"

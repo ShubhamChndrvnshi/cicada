@@ -14,17 +14,9 @@ task("generate-public-params", "New public param for cicada vote instance")
 
             const pp = generatePublicParameters(secondsToExpiry)
 
-            console.log("Generated a new public parameter\n")
+            console.log("Generated a new public parameter and saved to pp.json\n", pp)
             writeFileSync("pp.json", `${JSON.stringify(pp, (key, value) =>
                 typeof value === 'bigint' ? value.toString() : value
             )}`)
         }
     );
-
-/**
-npx hardhat generate-public-params --expiry 1715785629
-npx hardhat create-vote --network localhost --description test1 --expiry 1715785629
-npx hardhat bulk-cast-ballot --path "edge_case.csv" --network localhost
-npx hardhat expire-markets --network localhost
-npx hardhat finalize-vote --network localhost
- */

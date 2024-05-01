@@ -1,7 +1,7 @@
 import { pki } from 'node-forge';
 import { CicadaVote } from '../typechain-types/CicadaVote';
 import { normalize, generateRandomBigInt, toUint1024, jacobi } from "./"
-import { modPow, modInv } from 'bigint-crypto-utils';
+import { modPow } from 'bigint-crypto-utils';
 import { readFileSync, existsSync } from "fs"
 
 export function generatePublicParameters(lockTimeInSeconds?: number): CicadaVote.PublicParametersStruct {
@@ -11,24 +11,16 @@ export function generatePublicParameters(lockTimeInSeconds?: number): CicadaVote
 
         const N = BigInt(keypair.publicKey.n.toString());
 
-        const T = 100000n
-
-        // const T = generateRandomBigInt(BigInt(1000), BigInt(100000))
+        const T = generateRandomBigInt(1000n, 100000n)
         const g = normalize(generateRandomBigInt(BigInt(0), N), N);
         const h = normalize(modPow(g, BigInt(2) ** BigInt(T), N), N)
 
         const y = normalize(generateRandomBigInt(BigInt(0), N), N);
-        const yInv = normalize(modInv(y, N), N);
-
-        if (!((((y * yInv) % N) == BigInt(1)))) continue
+        const yInv = normalize(modPow(y, -1n,N), N);
         const jacobiG = jacobi(g, N)
         const jacobiY = jacobi(y, N)
-        console.log({
-            jacobiG, jacobiY
-        })
 
-        if (jacobiG !== 1) continue
-        if (jacobiY !== 1) continue
+        if (!((((y * yInv) % N) == BigInt(1))) || jacobiG !== 1 || jacobiY !== 1) continue
 
         return {
             N: toUint1024(N),
